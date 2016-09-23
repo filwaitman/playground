@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 # http://rosalind.info/problems/revp/
-from _helpers import get_rosalind_dataset_content
+from _helpers import get_rosalind_dataset_content, possible_chunks
 
 REVERSE_GENOME = {
     'T': 'A',
@@ -22,21 +22,6 @@ def is_genome_palindrome(string):
         end_index -= 1
 
     return True
-
-
-def possible_chunks(string, return_index=False):
-    result = []
-
-    for idx_start in range(len(string)):
-        for idx_end in range(idx_start + 2, len(string) + 1):
-            chunk = string[idx_start:idx_end]
-
-            if return_index:
-                result.append((idx_start, chunk))
-            else:
-                result.append(chunk)
-
-    return result
 
 
 def main(string):
