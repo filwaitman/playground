@@ -1,36 +1,25 @@
-# -*- coding: utf-8 -*-
 # https://codility.com/programmers/task/brackets
-# 100/60
+# 100/100 - https://app.codility.com/demo/results/trainingNJA88R-WUJ/
 
 
 def solution(S):
-    def evaluate_part(substr):
-        closing_tag = {
-            '(': ')',
-            '[': ']',
-            '{': '}',
-        }
+    open_tags = []
+    close_open_tag_mapping = {
+        ')': '(',
+        ']': '[',
+        '}': '{',
+    }
 
-        if not substr:
-            return 1
+    for x in S:
+        if x in '({[':
+            open_tags.append(x)
 
-        tag = substr[0]
-        if tag not in closing_tag.keys():
-            return 0
+        else:
+            open_tag = close_open_tag_mapping[x]
+            if not open_tags or open_tags.pop() != open_tag:
+                return 0
 
-        counter = 0
-        for idx, char in enumerate(substr):
-            if char == tag:
-                counter += 1
-            elif char == closing_tag[tag]:
-                counter -= 1
-
-            if counter == 0:
-                return evaluate_part(substr[1:idx]) * evaluate_part(substr[idx + 1:])
-
-        return 0
-
-    return evaluate_part(S)
+    return 0 if open_tags else 1
 
 
 assert solution('(()(())())') == 1
