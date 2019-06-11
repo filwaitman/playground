@@ -1,20 +1,27 @@
 # -*- coding: utf-8 -*-
 # https://codility.com/programmers/task/max_counters
-# 100/60
+# 100/100 - https://app.codility.com/demo/results/trainingGZMZ7X-PQH/
 
 
 def solution(N, A):
     result = [0] * N
     max_value = 0
+    just_maxed_out = True
 
     for item in A:
-        if 1 <= item <= N:
+        if item == N + 1:
+            if just_maxed_out:
+                continue
+
+            result = [max_value] * N
+            just_maxed_out = True
+
+        else:
+            just_maxed_out = False
             idx = item - 1
-            result[idx] = result[idx] + 1
+            result[idx] += 1
             max_value = max(result[idx], max_value)
 
-        elif item == N + 1:
-            result = [max_value] * N
 
     return result
 
@@ -31,3 +38,4 @@ assert solution(5, [3, 4, 4, 6]) == [2, 2, 2, 2, 2]
 assert solution(5, [3, 4, 4, 6, 1]) == [3, 2, 2, 2, 2]
 assert solution(5, [3, 4, 4, 6, 1, 4]) == [3, 2, 2, 3, 2]
 assert solution(5, [3, 4, 4, 6, 1, 4, 4]) == [3, 2, 2, 4, 2]
+assert solution(5, [6] * 100) == [0] * 5
